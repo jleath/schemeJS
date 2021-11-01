@@ -1,16 +1,25 @@
-function isSchemeNumber(str) {
+function isSchemeNumber(obj) {
   // TODO: For now this will only return true if the string can be converted
   //       to a valid JavaScript number. Need to improve this to handle Scheme
   //       number literals
-  return !Number.isNaN(Number(str));
+  return !Number.isNaN(Number(obj));
 }
 
-function schemeNumber(str) {
-  return Number(str);
+function isSchemeList(obj) {
+  return Array.isArray(obj);
 }
 
-function schemeSymbol(str) {
-  return str;
+function schemeNumber(obj) {
+  return Number(obj);
 }
 
-module.exports = { isSchemeNumber, schemeNumber, schemeSymbol };
+function isSchemeSymbol(obj) {
+  return typeof obj === 'string';
+}
+
+function schemeSymbol(obj) {
+  return obj;
+}
+
+module.exports = { isSchemeNumber, schemeNumber, schemeSymbol, isSchemeSymbol,
+  isSchemeList, };
