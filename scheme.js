@@ -1,5 +1,5 @@
 const SchemeParser = require('./scheme_parser.js');
-const SchemeEnvironment = require('./scheme_environment.js');
+const SchemeEnvironment = require('./src/scheme_environment.js');
 const SchemeTypes = require('./scheme_types.js');
 const rl = require('readline-sync');
 
