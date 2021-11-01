@@ -1,3 +1,6 @@
+const { isSchemeNumber, isSchemeList } = require("./scheme_types");
+const { add, mul, div, sub, gt, lt, gtequal, ltequal, numberEqual, modulo, remainder } = require("./scheme_math");
+
 function Environment(names, vals, outer) {
   this.outer = outer;
   this.frame = {};
@@ -18,20 +21,23 @@ Environment.prototype.bindValue = function(name, value) {
   this.frame[name] = value;
 };
 
-function add(...args) {
-  return args.reduce((result, curr) => result + curr, 0);
-}
-
-function mul(...args) {
-  return args.reduce((result, curr) => result * curr, 1);
-}
-
 // Minimial standard bindings just for testing the repl
 const standardBindings = {
-  '+': add,
-  '*': mul,
-  'begin': x => x[x.length - 1],
-  'pi': Math.PI,
+  '+': add, '*': mul, '/': div, '-': sub,
+  '>': gt, '<': lt, '>=': gtequal, '<=': ltequal, '=': numberEqual,
+  'pi': Math.PI, abs: Math.abs, max: Math.max, min: Math.min,
+  'modulo': modulo, 'remainder': remainder,
+  'begin': (...x) => x[x.length - 1],
+  'sequence': (...x) => x[x.length - 1],
+  '#t': true,
+  '#f': false,
+  'not': x => x === false,
+  'car': x => x[0],
+  'cdr': x => x[1],
+  'cons': (x, y) => [x, y],
+  'null?': x => x.length === 0,
+  'number?': x => isSchemeNumber(x),
+  'pair?': x => isSchemeList(x) && x.length === 2,
 };
 
 const GLOBAL_ENV = new Environment(Object.keys(standardBindings), 

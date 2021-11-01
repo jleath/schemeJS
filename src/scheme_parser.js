@@ -11,6 +11,7 @@ function expandDelimiters(program) {
 }
 
 function tokenize(program) {
+  program = program.toLowerCase();
   program = removeComments(program);
   program = expandDelimiters(program);
   return program.split(/\s+/).filter(token => token);
